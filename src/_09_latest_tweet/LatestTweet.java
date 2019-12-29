@@ -63,5 +63,6 @@ public void actionPerformed(ActionEvent e) {
 	}
 	String text = tf.getText();
 	getLatestTweet(text);
+	System.out.println();
 }
 }
