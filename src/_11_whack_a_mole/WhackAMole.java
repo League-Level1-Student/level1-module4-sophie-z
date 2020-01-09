@@ -16,18 +16,21 @@ public class WhackAMole implements ActionListener {
 void drawButtons(int number) {
 	for(int i = 0; i<24; i++) {
 		if(i == number) {
-			JButton mole = new JButton("MOLE!");
+			JButton mole = new JButton("    MOLE!    ");
 			mole.addActionListener(this);
 			p.add(mole);
 		}
 		else {
-			JButton button = new JButton();
+			JButton button = new JButton("NOT MOLES");
 			p.add(button);
 			button.addActionListener(this);
 		}
 	}
 }
-	Date timeatstart = new Date();
+	
+Date timeatstart = new Date();
+int moleswhacked = 0;
+int molesmissed = 0;
 JFrame f = new JFrame("Whack a Button for Fame and Glory");
 JPanel p = new JPanel();
 
@@ -65,13 +68,15 @@ void setup() {
 public void actionPerformed(ActionEvent e) {
 	// TODO Auto-generated method stub
 	JButton b = (JButton) e.getSource();
-	int hit = 0;
-	if(b.getText().equals("MOLE!")) {
-		hit = hit + 1;
+	
+	if(b.getText().equals("    MOLE!    ")) {
+		moleswhacked = moleswhacked + 1;
 	}
-	else {
+	
+	else if(b.getText().equals("NOT MOLES")) {
 		speak("CONGRATULATIONS. YOU MISSED.");
 	}
+	
 	f.remove(p);
 	p = new JPanel();
 	setup();
@@ -79,8 +84,16 @@ public void actionPerformed(ActionEvent e) {
 	drawButtons(r.nextInt(24));
 	f.pack();
 
-	if(hit==10) {
+	if(moleswhacked==10) {
 		endGame(timeatstart, 10);
+	}
+	
+	if(b.getText().equals("NOT MOLES")) {
+		molesmissed = molesmissed + 1;
+	}
+	
+	if(molesmissed==5) {
+		JOptionPane.showMessageDialog(null, "YOU LOST.");
 	}
 }
  }
